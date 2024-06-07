@@ -1,0 +1,144 @@
+{
+  "event_type": "merge_request",
+  "object_attributes": {
+    "assignee_id": null,
+    "author_id": 21576543,
+    "created_at": "2024-06-05 16:28:26 UTC",
+    "description": "",
+    "draft": false,
+    "head_pipeline_id": 1319869660,
+    "id": 306523743,
+    "iid": 6,
+    "last_edited_at": null,
+    "last_edited_by_id": null,
+    "merge_commit_sha": null,
+    "merge_error": null,
+    "merge_params": {
+      "force_remove_source_branch": "1"
+    },
+    "merge_status": "checking",
+    "merge_user_id": null,
+    "merge_when_pipeline_succeeds": false,
+    "milestone_id": null,
+    "source_branch": "test",
+    "source_project_id": 58482450,
+    "state_id": 1,
+    "target_branch": "main",
+    "target_project_id": 58482450,
+    "time_estimate": 0,
+    "title": "Changes 13",
+    "updated_at": "2024-06-05 16:28:28 UTC",
+    "updated_by_id": null,
+    "prepared_at": "2024-06-05 16:28:28 UTC",
+    "assignee_ids": [],
+    "blocking_discussions_resolved": true,
+    "detailed_merge_status": "checking",
+    "first_contribution": false,
+    "human_time_change": null,
+    "human_time_estimate": null,
+    "human_total_time_spent": null,
+    "labels": [],
+    "last_commit": {
+      "id": "2f40bc5f98fd590d3012b3227ed0a6c8a29b89f7",
+      "message": "Changes 13\n",
+      "title": "Changes 13",
+      "timestamp": "2024-06-05T21:57:56+05:30",
+      "url": "https://gitlab.com/testing3254823/First/-/commit/2f40bc5f98fd590d3012b3227ed0a6c8a29b89f7",
+      "author": {
+        "name": "Avinash Ranjan",
+        "email": "avinash.ranjan@sprinklr.com"
+      }
+    },
+    "reviewer_ids": [],
+    "source": {
+      "id": 58482450,
+      "name": "First",
+      "description": null,
+      "web_url": "https://gitlab.com/testing3254823/First",
+      "avatar_url": null,
+      "git_ssh_url": "git@gitlab.com:testing3254823/First.git",
+      "git_http_url": "https://gitlab.com/testing3254823/First.git",
+      "namespace": "Testing",
+      "visibility_level": 0,
+      "path_with_namespace": "testing3254823/First",
+      "default_branch": "main",
+      "ci_config_path": "",
+      "homepage": "https://gitlab.com/testing3254823/First",
+      "url": "git@gitlab.com:testing3254823/First.git",
+      "ssh_url": "git@gitlab.com:testing3254823/First.git",
+      "http_url": "https://gitlab.com/testing3254823/First.git"
+    },
+    "state": "opened",
+    "target": {
+      "id": 58482450,
+      "name": "First",
+      "description": null,
+      "web_url": "https://gitlab.com/testing3254823/First",
+      "avatar_url": null,
+      "git_ssh_url": "git@gitlab.com:testing3254823/First.git",
+      "git_http_url": "https://gitlab.com/testing3254823/First.git",
+      "namespace": "Testing",
+      "visibility_level": 0,
+      "path_with_namespace": "testing3254823/First",
+      "default_branch": "main",
+      "ci_config_path": "",
+      "homepage": "https://gitlab.com/testing3254823/First",
+      "url": "git@gitlab.com:testing3254823/First.git",
+      "ssh_url": "git@gitlab.com:testing3254823/First.git",
+      "http_url": "https://gitlab.com/testing3254823/First.git"
+    },
+    "time_change": 0,
+    "total_time_spent": 0,
+    "url": "https://gitlab.com/testing3254823/First/-/merge_requests/6",
+    "work_in_progress": false,
+    "approval_rules": [],
+    "action": "open"
+  },
+  "changes": {
+    "merge_status": {
+      "previous": "preparing",
+      "current": "checking"
+    },
+    "updated_at": {
+      "previous": "2024-06-05 16:28:26 UTC",
+      "current": "2024-06-05 16:28:28 UTC"
+    },
+    "prepared_at": {
+      "previous": null,
+      "current": "2024-06-05 16:28:28 UTC"
+    }
+  },
+  "project": {
+    "id": 58482450,
+    "name": "First",
+    "description": null,
+    "web_url": "https://gitlab.com/testing3254823/First",
+    "avatar_url": null,
+    "git_ssh_url": "git@gitlab.com:testing3254823/First.git",
+    "git_http_url": "https://gitlab.com/testing3254823/First.git",
+    "namespace": "Testing",
+    "visibility_level": 0,
+    "path_with_namespace": "testing3254823/First",
+    "default_branch": "main",
+    "ci_config_path": "",
+    "homepage": "https://gitlab.com/testing3254823/First",
+    "url": "git@gitlab.com:testing3254823/First.git",
+    "ssh_url": "git@gitlab.com:testing3254823/First.git",
+    "http_url": "https://gitlab.com/testing3254823/First.git"
+  },
+  "repository": {
+    "name": "First",
+    "url": "git@gitlab.com:testing3254823/First.git",
+    "description": null,
+    "homepage": "https://gitlab.com/testing3254823/First"
+  },
+  "user": {
+    "id": 21576543,
+    "name": "Avinash Ranjan",
+    "username": "avishaan24",
+    "avatar_url": "https://secure.gravatar.com/avatar/1a193bc9bca9397badd09c0f384ea6bb92af219e467e234e3dd1c26d183e421d?s=80&d=identicon",
+    "email": "[REDACTED]"
+  },
+  "object_kind": "merge_request",
+  "labels": []
+}
