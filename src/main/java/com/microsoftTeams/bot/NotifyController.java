@@ -70,21 +70,21 @@ public class NotifyController {
 
             // Notify the author when PR is merged
             if(information.getObject_attributes().getState().equals("merged")){
-                heroCard.setTitle("Notification about your PR from Gitlab");
+                heroCard.setTitle("Pull Request Merged");
                 heroCard.setSubtitle("Hii, " + author.getName());
                 heroCard.setText("Your PR on project "+ information.getProject().getName() + " with title " + information.getObject_attributes().getTitle() + " is now merged by " + information.getUser().getName());
                 heroCard.setButtons(new CardAction(ActionTypes.OPEN_URL, "View PR", information.getObject_attributes().getUrl()));
             }
             // notify user when PR is closed
             else if(information.getObject_attributes().getState().equals("closed")){
-                heroCard.setTitle("Notification about your PR from Gitlab");
+                heroCard.setTitle("Pull Request Closed");
                 heroCard.setSubtitle("Hii, " + author.getName());
                 heroCard.setText("Your PR on project "+ information.getProject().getName() + " with title " + information.getObject_attributes().getTitle() + " is now closed by " + information.getUser().getName());
                 heroCard.setButtons(new CardAction(ActionTypes.OPEN_URL, "View PR", information.getObject_attributes().getUrl()));
             }
             // notify user when some other user commit in the PR
             else if(information.getObject_attributes().getState().equals("opened")){
-                heroCard.setTitle("Notification about your PR from Gitlab");
+                heroCard.setTitle("Commits added");
                 heroCard.setSubtitle("Hii, " + author.getName());
                 heroCard.setText("New commit added on your PR on project "+ information.getProject().getName() + " with title " + information.getObject_attributes().getTitle() + " by " + information.getObject_attributes().getLast_commit().getAuthor().getName() + " with message " + information.getObject_attributes().getLast_commit().getMessage());
                 heroCard.setButtons(new CardAction(ActionTypes.OPEN_URL, "View PR", information.getObject_attributes().getUrl()));
@@ -95,7 +95,7 @@ public class NotifyController {
             // when comment is made on the PR notify the author of the PR
             if(information.getObject_attributes().getNoteable_type().equals("MergeRequest")){
                 Author author = dictionary.get(information.getObject_attributes().getNoteable_id());
-                heroCard.setTitle("Notification about your PR from Gitlab");
+                heroCard.setTitle("Comments added");
                 heroCard.setSubtitle("Hii, " + author.getName());
                 heroCard.setText("New comments received on your PR on project "+ information.getProject().getName() + " with title " + information.getMerge_request().getTitle() + " by " + information.getUser().getName() +"\n" + "\nComments : " + information.getObject_attributes().getNote());
                 heroCard.setButtons(new CardAction(ActionTypes.OPEN_URL, "View PR", information.getObject_attributes().getUrl()));
@@ -108,13 +108,20 @@ public class NotifyController {
                 Author author = information.getCommit().getAuthor();
                 for(Builds build: information.getBuilds()){
                     if(build.getStatus().equals("failed")){
-                        heroCard.setTitle("Notification from Gitlab about your pipeline status");
+                        heroCard.setTitle("Pipeline Status");
                         heroCard.setSubtitle("Hii, " + author.getName());
                         heroCard.setText("Your pipeline on project " + information.getProject().getName() + " at stage " + build.getStage() + " with name " + build.getName() + " got failed");
                         heroCard.setButtons(new CardAction(ActionTypes.OPEN_URL, "View Pipeline", information.getObject_attributes().getUrl()));
-                        System.out.println(information.getObject_attributes().getUrl());
+                        break;
                     }
                 }
+            }
+            else if(information.getObject_attributes().getStatus().equals("success")){
+                Author author = information.getCommit().getAuthor();
+                heroCard.setTitle("Pipeline Status");
+                heroCard.setSubtitle("Hii, " + author.getName());
+                heroCard.setText("Your pipeline on project " + information.getProject().getName()  + " got success");
+                heroCard.setButtons(new CardAction(ActionTypes.OPEN_URL, "View Pipeline", information.getObject_attributes().getUrl()));
             }
         }
 

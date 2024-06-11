@@ -35,6 +35,8 @@ public class GitlabBot extends ActivityHandler {
     private final String welcomeMessage =
         "Successfully added, we will notify about your operations in Gitlab.\n" + "\nThanks!!";
 
+    private final String message = "We will notify about your operation in Gitlab";
+
     private ConversationReferences conversationReferences;
 
     public GitlabBot(ConversationReferences withReferences) {
@@ -44,10 +46,8 @@ public class GitlabBot extends ActivityHandler {
     @Override
     protected CompletableFuture<Void> onMessageActivity(TurnContext turnContext) {
         addConversationReference(turnContext.getActivity());
-        String[] text = turnContext.getActivity().getText().toLowerCase().split(" ");
-        // notify to use the available command
         return turnContext
-                .sendActivity(MessageFactory.text(notify))
+                .sendActivity(MessageFactory.text(message))
                 .thenApply(sendResult -> null);
     }
 
@@ -79,6 +79,7 @@ public class GitlabBot extends ActivityHandler {
     // adds a ConversationReference to the shared Map.
     private void addConversationReference(Activity activity) {
         ConversationReference conversationReference = activity.getConversationReference();
+        System.out.println(activity.getConversationReference().getConversation().isGroup());
         conversationReferences.put(conversationReference.getUser().getId(), conversationReference);
     }
 
