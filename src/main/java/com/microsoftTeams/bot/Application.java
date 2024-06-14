@@ -11,18 +11,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
-//
-// This is the starting point of the Sprint Boot Bot application.
-//
 @SpringBootApplication
 
-// Use the default BotController to receive incoming Channel messages. A custom
-// controller could be used by eliminating this import and creating a new
-// org.springframework.web.bind.annotation.RestController.
-// The default controller is created by the Spring Boot container using
-// dependency injection. The default route is /api/messages.
-//
-// See NotifyController in this project for an example on adding a controller.
+/**
+ * Use the default BotController to receive incoming Channel messages. A custom
+ * controller could be used by eliminating this import and creating a new
+ * org.springframework.web.bind.annotation.RestController.
+ * The default controller is created by the Spring Boot container using
+ * dependency injection. The default route is /api/messages.
+ * See NotifyController in this project for an example on adding a controller.
+ */
+
 @Import({BotController.class})
 
 /**

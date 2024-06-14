@@ -1,20 +1,44 @@
 package com.microsoftTeams.bot.helpers;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * ObjectAttributes which is used to store details about the webhook notification from Gitlab
  */
 
 public class ObjectAttributes {
-    private Long author_id;
+
+    @JsonProperty("author_id")
+    private Long authorId;
+
+    @JsonProperty("id")
     private Long id;
+
+    @JsonProperty("state")
     private String state;
+
+    @JsonProperty("title")
     private String title;
-    private LastCommit last_commit;
+
+    @JsonProperty("last_commit")
+    private LastCommit lastCommit;
+
+    @JsonProperty("note")
     private String note;
-    private String noteable_type;
-    private Long noteable_id;
+
+    @JsonProperty("noteable_type")
+    private String noteableType;
+
+    @JsonProperty("noteable_id")
+    private Long noteableId;
+
+    @JsonProperty("url")
     private String url;
+
+    @JsonProperty("status")
     private String status;
+
+    @JsonProperty("ref")
     private String ref;
 
     public ObjectAttributes() {
@@ -44,12 +68,12 @@ public class ObjectAttributes {
         this.status = status;
     }
 
-    public Long getAuthor_id() {
-        return author_id;
+    public Long getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor_id(Long author_id) {
-        this.author_id = author_id;
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
     }
 
     public Long getId() {
@@ -84,27 +108,27 @@ public class ObjectAttributes {
         this.note = note;
     }
 
-    public String getNoteable_type() {
-        return noteable_type;
+    public String getNoteableType() {
+        return noteableType;
     }
 
-    public void setNoteable_type(String noteable_type) {
-        this.noteable_type = noteable_type;
+    public void setNoteableType(String noteableType) {
+        this.noteableType = noteableType;
     }
 
-    public LastCommit getLast_commit() {
-        return last_commit;
+    public LastCommit getLastCommit() {
+        return lastCommit;
     }
 
-    public void setLast_commit(LastCommit last_commit) {
-        this.last_commit = last_commit;
+    public void setLastCommit(LastCommit lastCommit) {
+        this.lastCommit = lastCommit;
     }
 
-    public Long getNoteable_id() {
-        return noteable_id;
+    public Long getNoteableId() {
+        return noteableId;
     }
 
-    public void setNoteable_id(Long noteable_id) {
-        this.noteable_id = noteable_id;
+    public void setNoteableId(Long noteableId) {
+        this.noteableId = noteableId;
     }
 }

@@ -1,14 +1,26 @@
 package com.microsoftTeams.bot.helpers;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Builds class which store stages information of the pipeline builds
  */
 
 public class Builds {
+
+    @JsonProperty("id")
     private Long id;
+
+    @JsonProperty("stage")
     private String stage;
+
+    @JsonProperty("name")
     private String name;
+
+    @JsonProperty("status")
     private String status;
+
+    @JsonProperty("user")
     private User user;
 
     public Builds() {

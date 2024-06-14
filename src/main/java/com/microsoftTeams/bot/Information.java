@@ -1,5 +1,6 @@
 package com.microsoftTeams.bot;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.microsoftTeams.bot.helpers.*;
 
 import java.util.List;
@@ -9,12 +10,26 @@ import java.util.List;
  */
 
 public class Information {
-    private String object_kind;
-    private ObjectAttributes object_attributes;
+
+    @JsonProperty("object_kind")
+    private String objectKind;
+
+    @JsonProperty("object_attributes")
+    private ObjectAttributes objectAttributes;
+
+    @JsonProperty("user")
     private User user;
+
+    @JsonProperty("project")
     private Project project;
-    private MergeRequest merge_request;
+
+    @JsonProperty("merge_request")
+    private MergeRequest mergeRequest;
+
+    @JsonProperty("commit")
     private Commits commit;
+
+    @JsonProperty("builds")
     private List<Builds> builds;
 
     public Information() {
@@ -36,12 +51,12 @@ public class Information {
         this.builds = builds;
     }
 
-    public MergeRequest getMerge_request() {
-        return merge_request;
+    public MergeRequest getMergeRequest() {
+        return mergeRequest;
     }
 
-    public void setMerge_request(MergeRequest merge_request) {
-        this.merge_request = merge_request;
+    public void setMergeRequest(MergeRequest mergeRequest) {
+        this.mergeRequest = mergeRequest;
     }
 
     public User getUser() {
@@ -60,19 +75,19 @@ public class Information {
         this.project = project;
     }
 
-    public ObjectAttributes getObject_attributes() {
-        return object_attributes;
+    public ObjectAttributes getObjectAttributes() {
+        return objectAttributes;
     }
 
-    public void setObject_attributes(ObjectAttributes object_attributes) {
-        this.object_attributes = object_attributes;
+    public void setObjectAttributes(ObjectAttributes objectAttributes) {
+        this.objectAttributes = objectAttributes;
     }
 
-    public String getObject_kind() {
-        return object_kind;
+    public String getObjectKind() {
+        return objectKind;
     }
 
-    public void setObject_kind(String object_kind) {
-        this.object_kind = object_kind;
+    public void setObjectKind(String objectKind) {
+        this.objectKind = objectKind;
     }
 }

@@ -1,11 +1,17 @@
 package com.microsoftTeams.bot.helpers;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Author class which is used to store author details who commit anything in the repo
  */
 
 public class Author {
+
+    @JsonProperty("name")
     private String name;
+
+    @JsonProperty("email")
     private String email;
 
     public Author() {

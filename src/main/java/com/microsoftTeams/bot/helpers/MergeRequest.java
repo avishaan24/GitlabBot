@@ -1,13 +1,22 @@
 package com.microsoftTeams.bot.helpers;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * MergeRequest class which is used to store data of the event type merge_request in webhooks Gitlab
  */
 
 public class MergeRequest {
+    @JsonProperty("id")
     private Long id;
+
+    @JsonProperty("title")
     private String title;
-    private LastCommit last_commit;
+
+    @JsonProperty("last_commit")
+    private LastCommit lastCommit;
+
+    @JsonProperty("state")
     private String state;
 
     public MergeRequest() {
@@ -37,11 +46,11 @@ public class MergeRequest {
         this.title = title;
     }
 
-    public LastCommit getLast_commit() {
-        return last_commit;
+    public LastCommit getLastCommit() {
+        return lastCommit;
     }
 
-    public void setLast_commit(LastCommit last_commit) {
-        this.last_commit = last_commit;
+    public void setLastCommit(LastCommit lastCommit) {
+        this.lastCommit = lastCommit;
     }
 }

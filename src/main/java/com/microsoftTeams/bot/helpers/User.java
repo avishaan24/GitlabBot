@@ -1,12 +1,20 @@
 package com.microsoftTeams.bot.helpers;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * User class used to store the user who initiate the event
  */
 
 public class User {
+
+    @JsonProperty("name")
     private String name;
+
+    @JsonProperty("username")
     private String username;
+
+    @JsonProperty("email")
     private String email;
 
     public User() {

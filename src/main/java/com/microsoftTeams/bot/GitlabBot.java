@@ -37,7 +37,7 @@ public class GitlabBot extends ActivityHandler {
 
     private final String message = "We will notify about your operation in Gitlab";
 
-    private ConversationReferences conversationReferences;
+    private final ConversationReferences conversationReferences;
 
     public GitlabBot(ConversationReferences withReferences) {
         conversationReferences = withReferences;
@@ -79,7 +79,6 @@ public class GitlabBot extends ActivityHandler {
     // adds a ConversationReference to the shared Map.
     private void addConversationReference(Activity activity) {
         ConversationReference conversationReference = activity.getConversationReference();
-        System.out.println(activity.getConversationReference().getConversation().isGroup());
         conversationReferences.put(conversationReference.getUser().getId(), conversationReference);
     }
 
