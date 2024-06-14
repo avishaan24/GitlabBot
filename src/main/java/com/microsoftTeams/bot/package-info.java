@@ -1,4 +1,4 @@
 /**
- * This package contains the classes for the proactive messages sample.
+ * This package contains the classes for sending pull request events related information to the user.
  */
 package com.microsoftTeams.bot;

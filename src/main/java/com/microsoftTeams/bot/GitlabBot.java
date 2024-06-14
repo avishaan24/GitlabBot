@@ -20,8 +20,7 @@ import java.time.*;
  *
  * <p>
  * This is where application specific logic for interacting with the users would
- * be added. For this sample, the {@link #onMessageActivity(TurnContext)} echos
- * the text back to the user and updates the shared
+ * be added. For this sample, the {@link #onMessageActivity(TurnContext)} updates conversationReferences
  * {@link ConversationReferences}. The
  * {@link #onMembersAdded(List, TurnContext)} will send a greeting to new
  * conversation participants with instructions for sending a proactive message.
