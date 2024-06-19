@@ -1,11 +1,13 @@
 package com.microsoftTeams.bot.helpers;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * MergeRequest class which is used to store data of the event type merge_request in webhooks Gitlab
  */
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MergeRequest {
     @JsonProperty("id")
     private Long id;
@@ -18,6 +20,12 @@ public class MergeRequest {
 
     @JsonProperty("state")
     private String state;
+
+    @JsonProperty("web_url")
+    private String webUrl;
+
+    @JsonProperty("author")
+    private Author author;
 
     public MergeRequest() {
     }
@@ -52,5 +60,21 @@ public class MergeRequest {
 
     public void setLastCommit(LastCommit lastCommit) {
         this.lastCommit = lastCommit;
+    }
+
+    public String getWebUrl() {
+        return webUrl;
+    }
+
+    public void setWebUrl(String webUrl) {
+        this.webUrl = webUrl;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 }

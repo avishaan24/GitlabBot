@@ -9,13 +9,20 @@ import com.microsoft.bot.schema.ConversationReference;
 import com.microsoft.bot.schema.HeroCard;
 import com.microsoftTeams.bot.helpers.Author;
 import com.microsoftTeams.bot.helpers.Builds;
+import com.microsoftTeams.bot.helpers.MergeRequest;
+import com.microsoftTeams.bot.helpers.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 /**
  * This controller will receive GET requests at /api/notify and send a message
@@ -39,17 +46,25 @@ public class NotifyController {
     private final Map<Long, Author> dictionary;
 
     private final ConversationReferences conversationReferences;
+
+    private final ReviewerUsers reviewerUsers;
+
     private final String appId;
+
+    @Value("${accessToken}")
+    private String accessToken;
 
     @Autowired
     public NotifyController(
         BotFrameworkHttpAdapter withAdapter,
         Configuration withConfiguration,
-        ConversationReferences withReferences
+        ConversationReferences withReferences,
+        ReviewerUsers withUsers
     ) {
         adapter = withAdapter;
         conversationReferences = withReferences;
         appId = withConfiguration.getProperty("MicrosoftAppId");
+        reviewerUsers = withUsers;
         this.dictionary = new ConcurrentHashMap<>();
     }
 
@@ -187,4 +202,109 @@ public class NotifyController {
                 break;
         }
     }
+
+
+    /**
+     * Triggers by cron job at specific time to send notification regarding reviews needed list
+     */
+    @GetMapping("/api/Gitlab/reviewNotification")
+    public void sendReviewNotification(){
+
+        // sending notification to all the users who want review list
+        for(String user : reviewerUsers.getUsers()){
+
+            // Gitlab api to get userDetails using email of the user in ms-teams
+            CompletableFuture<User> userFuture = GitlabBot.waitForUser(user, accessToken);
+            AtomicReference<User> localUser = new AtomicReference<>(null); // Use AtomicReference
+            CompletableFuture<Void> resultHandler = userFuture.thenAccept(users -> {
+                if (users != null) {
+                    // Save the users to the AtomicReference
+                    localUser.set(users);
+                } else {
+                    System.out.println("Failed to receive User");
+                }
+            });
+
+            // wait for the resultHandler to ensure that the user handling is complete
+            resultHandler.join();
+
+            // use the localUser.get() to retrieve the user
+            User users = localUser.get();
+
+
+            // get all merge request in which user is the reviewer
+            CompletableFuture<List<MergeRequest>> mergeRequestFuture = GitlabBot.waitForMergeRequest(users.getUsername(), "", accessToken);
+            AtomicReference<List<MergeRequest>> localMergeRequest = new AtomicReference<>(null);
+            localMergeRequest.set(new ArrayList<>());
+            mergeRequestFuture.thenAccept(mergeRequests -> {
+                if(mergeRequests != null && !mergeRequests.isEmpty()){
+                    for(MergeRequest mergeRequest: mergeRequests){
+                        localMergeRequest.get().add(mergeRequest);
+                    }
+                }else{
+                    System.out.println("Failed to receive merge requests");
+                }
+            }).join();
+            List<MergeRequest> mergeRequestAll = localMergeRequest.get();
+
+            // get all merge request in which user is reviewer and already approved
+            mergeRequestFuture = GitlabBot.waitForMergeRequest(users.getUsername(), users.getId(), accessToken);
+            localMergeRequest.set(new ArrayList<>());
+            mergeRequestFuture.thenAccept(mergeRequests -> {
+                if(mergeRequests != null && !mergeRequests.isEmpty()){
+                    for(MergeRequest mergeRequest: mergeRequests){
+                        localMergeRequest.get().add(mergeRequest);
+                    }
+                }else{
+                    System.out.println("Failed to receive merge requests");
+                }
+            }).join();
+
+            // ids of all the mergeRequest which is already approved
+            List<Long> ids = localMergeRequest.get().stream()
+                                .map(MergeRequest::getId)
+                                .collect(Collectors.toList());
+
+            // Filter mergeRequestAll such that it doesn't contain mergeRequestId which is already approved by user
+            List<MergeRequest> result = mergeRequestAll.stream()
+                    .filter(mr -> !ids.contains(mr.getId()))
+                    .collect(Collectors.toList());
+
+            // reverse such that old PRs get more priority
+            Collections.reverse(result);
+
+            // format message to send notification and contains max 5 reviews mergeRequest
+            String message = formatResponse(result);
+
+            // if there is PRs which requires review from the user
+            if(!message.isEmpty()){
+
+                // fetch conversationReference of that user to send review list
+                ConversationReference reference = conversationReferences.get(user);
+                HeroCard heroCard = new HeroCard();
+                heroCard.setTitle("Reviews Needed");
+                heroCard.setText(message);
+                adapter.continueConversation(
+                        appId, reference, turnContext -> turnContext.sendActivity(MessageFactory.attachment(heroCard.toAttachment())).thenApply(resourceResponse -> null)
+                );
+            }
+        }
+    }
+
+    /**
+     * used for formatting the mergeRequest list to send notification (at max 5 reviews list)
+     * @param mergeRequests
+     * @return
+     */
+    private String formatResponse(List<MergeRequest> mergeRequests){
+        StringBuilder sb = new StringBuilder();
+        if(mergeRequests.isEmpty())
+            return "";
+        sb.append("List of pull requests which requires your review:\n");
+        for(int i = 0; i < Math.min(mergeRequests.size(), 5); i++){
+            sb.append(i + 1).append(") Pull request by ").append(mergeRequests.get(i).getAuthor().getName()).append("\n").append(mergeRequests.get(i).getWebUrl()).append("\n \n");
+        }
+        return sb.toString();
+    }
+
 }

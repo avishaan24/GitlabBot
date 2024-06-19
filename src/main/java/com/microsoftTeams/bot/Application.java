@@ -45,8 +45,8 @@ public class Application extends BotDependencyConfiguration {
      * @return The Bot implementation for this application.
      */
     @Bean
-    public Bot getBot(ConversationReferences conversationReferences) {
-        return new GitlabBot(conversationReferences);
+    public Bot getBot(ConversationReferences conversationReferences, ReviewerUsers reviewerUsers) {
+        return new GitlabBot(conversationReferences, reviewerUsers);
     }
 
     /**
@@ -60,6 +60,11 @@ public class Application extends BotDependencyConfiguration {
         return new ConversationReferences();
     }
 
+    /**
+     * list which contains userEmails who wants review list
+     * @return
+     */
+    @Bean ReviewerUsers getReviewerUsers(){return new ReviewerUsers();}
 
     /**
      * Returns a custom Adapter that provides error handling.

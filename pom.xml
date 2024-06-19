@@ -6,12 +6,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.microsoft.bot.sample</groupId>
-    <artifactId>bot-proactive</artifactId>
+    <artifactId>gitlab-notification</artifactId>
     <version>sample</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>This package contains a Java Bot Proactive Messages sample using Spring Boot.</description>
+    <description>This package contains a Java Bot which is used to send notification related to Gitlab PRs to the user using Spring Boot.</description>
     <url>http://maven.apache.org</url>
 
     <parent>
@@ -20,22 +20,6 @@
         <version>2.4.0</version>
         <relativePath/>
     </parent>
-
-    <licenses>
-        <license>
-            <name>MIT License</name>
-            <url>http://www.opensource.org/licenses/mit-license.php</url>
-        </license>
-    </licenses>
-
-    <developers>
-        <developer>
-            <name>Bot Framework Development</name>
-            <email></email>
-            <organization>Microsoft</organization>
-            <organizationUrl>https://dev.botframework.com/</organizationUrl>
-        </developer>
-    </developers>
 
     <properties>
         <java.version>1.8</java.version>
